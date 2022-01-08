@@ -1,0 +1,80 @@
+/* Basic CSS */
+.centered {
+    text-align: center;
+}
+.left {
+    text-align: left;
+}
+
+.large {
+    font-size: large;
+}
+.medium {
+    font-size: medium;
+}
+.small {
+    font-size: small;
+}
+.header {
+    margin-bottom: 1rem;
+    padding: 1rem 1rem;
+    background-color: #1a1d1a;
+    color: aliceblue;
+}
+.footer {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    background-color: #1a1d1a;
+    color: aliceblue;
+}
+
+
+* {
+    box-sizing: border-box;
+  }
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+.row {margin: 0 -5px;}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-color: #3a4b38;
+    color: aliceblue;
+    margin: 2rem;
+  }
+
+ul.no-bullets {
+    list-style-type: none;
+    padding: 0;
+}
+.item-list {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.link {
+    text-decoration: none;
+    color: aliceblue;
+}
+.link:hover{
+    text-decoration: none;
+    color:rgb(138, 245, 170);
+}
+
+img {
+    width: 70%;
+    height: auto;
+    object-fit: cover;
+}
