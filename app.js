@@ -6,7 +6,7 @@
  * 
  * NOTE: This code was adapted from the Spotify Web API Template for node.js
  * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
+ * https://developer.spotify.com/documentation/web-api/quick-start/
  */
 
 var express = require('express'); // Express web server framework
