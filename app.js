@@ -8,6 +8,7 @@
  * For more information, read
  * https://developer.spotify.com/documentation/web-api/quick-start/
  */
+import {CLIENT_ID, CLIENT_SECRET} from './key.js';
 
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -16,9 +17,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-var client_id = process.env.CLIENT_ID; // Your client id
-var client_secret = process.env.CLIENT_SECRET; // Your secret
-var redirect_uri = 'https://spotify-analytics-j1mk1m.herokuapp.com/callback'; // Your redirect uri
+var client_id = CLIENT_ID; // Your client id
+var client_secret = CLIENT_SECRET; // Your secret
+var redirect_uri = 'https://spotify-analytics-project.uc.r.appspot.com//callback'; // Your redirect uri
 // 'http://localhost:8888/callback'
 const PORT = process.env.PORT || 8888
 /**
