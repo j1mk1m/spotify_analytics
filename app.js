@@ -18,7 +18,7 @@ require('dotenv').config();
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
-var redirect_uri = 'https://spotify-analytics-j1mk1m.herokuapp.com//callback'; // Your redirect uri
+var redirect_uri = 'https://spotify-analytics-j1mk1m.herokuapp.com/callback'; // Your redirect uri
 // 'http://localhost:8888/callback'
 const PORT = process.env.PORT || 8888
 /**
