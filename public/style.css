@@ -1,4 +1,18 @@
 /* Basic CSS */
+body {
+    background-color: rgb(146, 145, 145);
+}
+
+#login, #loggedin {
+    display: none;
+  }
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+}
+
 .centered {
     text-align: center;
 }
@@ -47,13 +61,18 @@
     clear: both;
 }
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
     padding: 16px;
     text-align: center;
     background-color: #3a4b38;
     color: aliceblue;
     margin: 2rem;
   }
+
+.rec-col {
+    float: left;
+    width: 50%;
+}
 
 ul.no-bullets {
     list-style-type: none;
@@ -77,4 +96,12 @@ img {
     width: 70%;
     height: auto;
     object-fit: cover;
+}
+table {
+    width: 100%;
+}
+td, th {
+    text-align: left;
+    border: 1px solid #dddddd;
+    padding: 2px 5px;
 }
