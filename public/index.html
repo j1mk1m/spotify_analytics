@@ -4,28 +4,22 @@
     <title>Spotify Analytics (j1mk1m)</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="style.css" rel="stylesheet">
-    <style type="text/css">
-      #login, #loggedin {
-        display: none;
-      }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
-    </style>
   </head>
 
-  <body style="background-color: rgb(146, 145, 145);">
+  <body>
     <div class="container">
+        <h1 class='centered header'> Spotify Analytics</h1>
       <div id="login">
-        <h1 class='centered header'>Spotify Analytics</h1>
-        <a href="/login" class="btn btn-primary" style="float: right;background-color: green;">Log in with Spotify</a>
+        <a href="/login" class="btn btn-primary" style="float: right ;background-color: green;">Log in with Spotify</a>
       </div>
       <div id="loggedin">
         <!--User profile HTML-->
         <div id="user-profile">
+        </div>
+        <!-- Recommendation Machine Learning -->
+        <div class="row">
+            <div class="rec-col" id="recommendation-artist"></div>
+            <div class="rec-col" id="recommendation-track"></div>
         </div>
         <!--User tracks and playlists columns HTML-->
         <div class="row">
@@ -43,26 +37,25 @@
             </div>
         </div>
         <!--oAuth access token HTML-->
-        <div id="oauth">
+        <!-- <div id="oauth">
         </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-        <!--Footer HTML-->
-        <div class="footer">
-            <img src="SpotifyAnalytics.png" style="width: 100px;height: 100px; float: left;">
-            <p>
-                <ul class="no-bullets">
-                    <li>Developed by James Gyeongwon Kim</li>
-                    <li>Email: kkw9709@gmail.com / gyeongwk@andrew.cmu.edu</li>
-                    <li>Project Github: </li>
-                    <li>Adapted from <a href= "https://developer.spotify.com/documentation/web-api/quick-start/">Spotify Web API example</a></li>
-                </ul>
-            </p>
-        </div>
+        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button> -->
       </div>
+      <!--Footer HTML-->
+      <div class="footer">
+        <!-- <img src="SpotifyAnalytics.png" style="width: 100px;height: 100px; float: left;"> -->
+        <p>
+            <ul class="no-bullets">
+                <li>Developed by James Gyeongwon Kim</li>
+                <li>Email: kkw9709@gmail.com / gyeongwk@andrew.cmu.edu</li>
+                <li>Project Github: <a href="https://github.com/j1mk1m/spotify_analytics">https://github.com/j1mk1m/spotify_analytics</a> </li>
+                <li>Adapted from <a href= "https://developer.spotify.com/documentation/web-api/quick-start/">Spotify Web API example</a></li>
+            </ul>
+        </p>
+    </div>
     </div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1 class='centered header'><img src="SpotifyAnalytics.png" style="width: 50px;height: 50px;"> Spotify Analytics</h1>
         <a href="https://www.spotify.com/logout/" class="btn btn-primary" style="float: right;background-color: green;">Log Out</a>
         <!-- <h5 style="float: right;color: rgb(250, 250, 250);">Logged in as {{display_name}} </h5> -->
       <div class="card" style="width: 50%;">
@@ -81,6 +74,42 @@
           </dl>
         </div>
       </div>
+    </script>
+
+    <script id="recommendation-artist-template" type="text/x-handlebars-template">
+        <div class="card">
+            <h4>Recommendations Based On Top Artists</h4>
+            <table>
+                <tr>
+                    <th>Track</th>
+                    <th>Artist</th>
+                </tr>
+                {{#each tracks}}
+                <tr>
+                    <td><a href="{{this.external_urls.spotify}}" class="link">{{this.name}}</a></td>
+                    <td>{{this.artists.0.name}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </script>
+
+    <script id="recommendation-track-template" type="text/x-handlebars-template">
+        <div class="card">
+            <h4>Recommendations Based On Top Tracks</h4>
+            <table>
+                <tr>
+                    <th>Track</th>
+                    <th>Artist</th>
+                </tr>
+                {{#each tracks}}
+                <tr>
+                    <td><a href="{{this.external_urls.spotify}}" class="link">{{this.name}}</a></td>
+                    <td>{{this.artists.0.name}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
     </script>
 
     <!-- Recently played tracks column template-->
@@ -143,14 +172,14 @@
         </div>
     </script>
 
-    <!-- oAuth template-->
+    <!-- oAuth template
     <script id="oauth-template" type="text/x-handlebars-template">
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
         <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
       </dl>
-    </script>
+    </script> -->
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -175,6 +204,14 @@
             userProfileTemplate = Handlebars.compile(userProfileSource),
             userProfilePlaceholder = document.getElementById('user-profile');
 
+        var recASource = document.getElementById('recommendation-artist-template').innerHTML,
+            recATemplate = Handlebars.compile(recASource),
+            recAPlaceholder = document.getElementById('recommendation-artist');
+
+        var recTSource = document.getElementById('recommendation-track-template').innerHTML,
+            recTTemplate = Handlebars.compile(recTSource),
+            recTPlaceholder = document.getElementById('recommendation-track');
+
         var recentSource = document.getElementById('recent-template').innerHTML,
             recentTemplate = Handlebars.compile(recentSource),
             recentPlaceholder = document.getElementById('recent');
@@ -191,9 +228,9 @@
             toptrackTemplate = Handlebars.compile(toptrackSource),
             toptrackPlaceholder = document.getElementById('toptrack');
 
-        var oauthSource = document.getElementById('oauth-template').innerHTML,
-            oauthTemplate = Handlebars.compile(oauthSource),
-            oauthPlaceholder = document.getElementById('oauth');
+        // var oauthSource = document.getElementById('oauth-template').innerHTML,
+        //     oauthTemplate = Handlebars.compile(oauthSource),
+        //     oauthPlaceholder = document.getElementById('oauth');
 
         var params = getHashParams();
 
@@ -206,10 +243,10 @@
         } else {
           if (access_token) {
             // render oauth info
-            oauthPlaceholder.innerHTML = oauthTemplate({
-              access_token: access_token,
-              refresh_token: refresh_token
-            });
+            // oauthPlaceholder.innerHTML = oauthTemplate({
+            //   access_token: access_token,
+            //   refresh_token: refresh_token
+            // });
 
             // User Info API Call
             $.ajax({
@@ -219,6 +256,8 @@
                 },
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
+                  userID = response["id"];
 
                   $('#login').hide();
                   $('#loggedin').show();
@@ -233,7 +272,6 @@
                 },
                 success: function(response) {
                   recentPlaceholder.innerHTML = recentTemplate(response);
-
                   $('#login').hide();
                   $('#loggedin').show();
                 }
@@ -247,12 +285,36 @@
                 },
                 success: function(response) {
                   playlistPlaceholder.innerHTML = playlistTemplate(response);
-
                   $('#login').hide();
                   $('#loggedin').show();
                 }
             });
-         
+
+
+            function get_recsA (userID, topFiveArtist) {
+                $.ajax({
+                    url: 'https://api.spotify.com/v1/recommendations?' + new URLSearchParams({seed_artists: topFiveArtist, seed_genres: "", seed_tracks: ""}),
+                    headers: {
+                    'Authorization': 'Bearer ' + access_token
+                    },
+                    success: function(response) {
+                        recAPlaceholder.innerHTML = recATemplate(response);
+
+                        var tracks = [];
+                        for (var i=0; i < response["tracks"].length; i++) {
+                            tracks[i] = response["tracks"][i]["uri"];
+                        }
+                        // var butt = document.createElement("button");
+                        // butt.setAttribute("onclick", "create_playlist(userID, tracks);");
+                        // butt.innerHTML = "Create Playlist";
+                        // var container = document.getElementById("recommendation-artist");
+                        // container.appendChild(butt);
+                        $('#login').hide();
+                        $('#loggedin').show();
+                    }
+                });
+            }
+
             // User Top Artists API Call
             $.ajax({
                 url: 'https://api.spotify.com/v1/me/top/artists',
@@ -261,12 +323,43 @@
                 },
                 success: function(response) {
                   topartistPlaceholder.innerHTML = topartistTemplate(response);
+                  
+                  var topFiveArtist = "";
+                  for (var i=0; i < 5; i++) {
+                      topFiveArtist += response['items'][i]['id'] + ",";
+                  }
+                  topFiveArtist = topFiveArtist.substring(0, topFiveArtist.length - 1);
+                  get_recsA(userID, topFiveArtist);
 
                   $('#login').hide();
                   $('#loggedin').show();
                 }
             });
-            
+
+            function get_recsT (userID, topFiveTrack) {
+                $.ajax({
+                    url: 'https://api.spotify.com/v1/recommendations?' + new URLSearchParams({seed_artists: "", seed_genres: "", seed_tracks: topFiveTrack}),
+                    headers: {
+                    'Authorization': 'Bearer ' + access_token
+                    },
+                    success: function(response) {
+                        recTPlaceholder.innerHTML = recTTemplate(response);
+
+                        var tracks = [];
+                        for (var i=0; i < response["tracks"].length; i++) {
+                            tracks[i] = response["tracks"][i]["uri"];
+                        }
+                        // var butt = document.createElement("button");
+                        // butt.setAttribute("onclick", "create_playlist(userID, tracks);");
+                        // butt.innerHTML = "Create Playlist";
+                        // var container = document.getElementById("recommendation-track");
+                        // container.appendChild(butt);
+                        $('#login').hide();
+                        $('#loggedin').show();
+                    }
+                });
+            }
+
             // User Top Tracks API Call
             $.ajax({
                 url: 'https://api.spotify.com/v1/me/top/tracks',
@@ -275,7 +368,13 @@
                 },
                 success: function(response) {
                   toptrackPlaceholder.innerHTML = toptrackTemplate(response);
-
+                  
+                  var topFiveTrack = "";
+                  for (var i=0; i < 5; i++) {
+                      topFiveTrack += response['items'][i]['id'] + ",";
+                  }
+                  topFiveTrack = topFiveTrack.substring(0, topFiveTrack.length - 1);
+                  get_recsT(userID, topFiveTrack);
                   $('#login').hide();
                   $('#loggedin').show();
                 }
@@ -288,22 +387,34 @@
           }
 
           // refresh token button clicked
-          document.getElementById('obtain-new-token').addEventListener('click', function() {
-            $.ajax({
-              url: '/refresh_token',
-              data: {
-                'refresh_token': refresh_token
-              }
-            }).done(function(data) {
-              access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });
-            });
-          }, false);
+        //   document.getElementById('obtain-new-token').addEventListener('click', function() {
+        //     $.ajax({
+        //       url: '/refresh_token',
+        //       data: {
+        //         'refresh_token': refresh_token
+        //       }
+        //     }).done(function(data) {
+        //       access_token = data.access_token;
+        //       oauthPlaceholder.innerHTML = oauthTemplate({
+        //         access_token: access_token,
+        //         refresh_token: refresh_token
+        //       });
+        //     });
+        //   }, false);
         }
       })();
+    //   function create_playlist (userID, tracks) {
+    //             $.post('https://api.spotify.com/v1/users/' + userID + '/playlists',
+    //                     {name: "Your Recommended Playlist"},
+    //                     function (data, status) {
+    //                         var playlistID = data["id"];
+    //                         $.post('https://api.spotify.com/v1/playlists/' + playlistID,
+    //                                 {uris: tracks},
+    //                                 function (data, status) {
+    //                                     console.log("Successfully created playlist");
+    //                                 });
+    //                     });
+    //         }
     </script>
   </body>
 </html>
