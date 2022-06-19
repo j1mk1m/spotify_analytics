@@ -1,9 +1,9 @@
 # Spotify Analytics Web Application
 
 Author: James Gyeongwon Kim (j1mk1m)   
-Description: This web application uses Oauth authentification to access the Spotify API, which allows users to connect to their Spotify accounts to display their account information, recently played tracks, playlists, and top artists and tracks. 
+Description: This web application uses Oauth authentification to access the Spotify API, which allows users to connect to their Spotify accounts to display their account information, recently played tracks, playlists, and top artists and tracks. Furthermore, the python module allows user to create recommended playlists based on similar tracks, albums, artists, and keywords.
 
-See the web application on your web browser: https://spotify-analytics-j1mk1m.herokuapp.com/
+See the web application on your web browser: https://spotify-analytics-project.uc.r.appspot.com
 
 ### How to run the project
 **Set up your Spotify Developer account**
